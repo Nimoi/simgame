@@ -1,7 +1,7 @@
 import Calc from './calc.js';
 
 var moon = new Image();
-moon.src = 'https://mdn.mozillademos.org/files/1443/Canvas_moon.png';
+moon.src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';
 
 class Unit {
     constructor(props) {
@@ -21,11 +21,8 @@ class Unit {
         this.draw();
     }
     draw() {
-        // TODO: use camera offset
-        // TODO: add method to camera.addOffset(x,y) - returns x/y position with camera offset
         let xOffset = this.x - this.camera.x,
             yOffset = this.y - this.camera.y;
-        // this.canvas.ctx.drawImage(moon, this.x, this.y, this.size, this.size);
         this.canvas.ctx.drawImage(moon, xOffset, yOffset, this.size, this.size);
     }
     act() {

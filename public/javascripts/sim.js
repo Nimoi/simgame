@@ -2,6 +2,7 @@ import Keyboard from './input.js';
 import Unit from './unit.js';
 import Map from './map.js';
 import Camera from './camera.js';
+import Resource from "./resource.js";
 
 var sun = new Image();
 var moon = new Image();
@@ -43,8 +44,17 @@ var nimoi = new Unit({
     camera: camera
 });
 
+var resource = new Resource({
+    x: 100,
+    y: 100,
+    canvas: canvas,
+    map: map,
+    camera: camera,
+});
+
 var Game = {
     units: [nimoi],
+    resources: [resource],
     map: map,
     camera: camera,
     delta: 0,
@@ -66,8 +76,12 @@ var Game = {
         canvas.clearCanvas();
         canvas.ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
         Keyboard.handleKeys(camera, this.delta);
+
         for (let i=0; i<this.units.length; i++) {
-            this.units[i].update();
+            this.units[i].update(this.resources);
+        }
+        for (let i=0; i<this.resources.length; i++) {
+            this.resources[i].update();
         }
         this.drawLayer(0, camera);
         // var time = new Date();
