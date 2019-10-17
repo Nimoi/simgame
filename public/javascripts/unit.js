@@ -1,29 +1,21 @@
 import Calc from './calc.js';
+import Point from "./point.js";
 
 var moon = new Image();
 moon.src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';
 
-class Unit {
+class Unit extends Point {
     constructor(props) {
-        this.x = props.x;
-        this.y = props.y;
-        this.size = props.size;
-        this.canvas = props.canvas;
+        super(props);
         this.impulse = 'wander';
         this.speed = 0.5;
         this.path = [{x: this.x, y: this.y}];
         this.map = props.map;
-        this.camera = props.camera;
     }
     update() {
         this.drawPath();
         this.act();
         this.draw();
-    }
-    draw() {
-        let xOffset = this.x - this.camera.x,
-            yOffset = this.y - this.camera.y;
-        this.canvas.ctx.drawImage(moon, xOffset, yOffset, this.size, this.size);
     }
     act() {
         if (this.impulse === 'wander') {

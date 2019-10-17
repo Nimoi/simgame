@@ -4,10 +4,6 @@ import Map from './map.js';
 import Camera from './camera.js';
 import Resource from "./resource.js";
 
-var sun = new Image();
-var moon = new Image();
-var earth = new Image();
-
 var canvas = {
     width: 800,
     height: 600,
@@ -17,7 +13,7 @@ var canvas = {
     }
 };
 
-    // Grid tiles
+// Grid tiles
 // Map scrolling / mouse corners
 // Units have needs - Hunger, Thirst, Tired
 // Units have skills - ???
@@ -27,6 +23,7 @@ var map = new Map({
     cols: 12,
     rows: 12,
     tileSize: 64,
+    canvas: canvas,
 });
 
 var camera = new Camera({
@@ -64,11 +61,7 @@ var Game = {
         this.images.sun = (new Image()).src = 'https://mdn.mozillademos.org/files/1456/Canvas_sun.png';
         this.images.moon = (new Image()).src = 'https://mdn.mozillademos.org/files/1443/Canvas_moon.png';
         this.images.earth = (new Image()).src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';
-        // this.images.tileAtlas = (new Image()).src = '/images/tiles.png';
-        this.images.tileAtlas = new Image();
-        this.images.tileAtlas.src = '/images/tiles.png';
         Keyboard.listenForEvents([Keyboard.LEFT, Keyboard.RIGHT, Keyboard.UP, Keyboard.DOWN]);
-        // window.requestAnimationFrame(this.draw);
         window.requestAnimationFrame((elapsed) => {this.draw(elapsed)});
     },
     draw: function (elapsed) {
@@ -83,7 +76,7 @@ var Game = {
         for (let i=0; i<this.resources.length; i++) {
             this.resources[i].update();
         }
-        this.drawLayer(0, camera);
+        this.map.drawLayer(0, camera);
         // var time = new Date();
         // ctx.rotate(((2 * Math.PI) / 60) * time.getSeconds() + ((2 * Math.PI) / 60000) * time.getMilliseconds());
         // compute delta time in seconds -- also cap it
@@ -92,45 +85,6 @@ var Game = {
         this.previousElapsed = elapsed;
         window.requestAnimationFrame((elapsed) => {this.draw(elapsed)});
     },
-    drawLayer: function (layer, camera) {
-        var camera = this.camera,
-            map = this.map;
-        var startCol = Math.floor(camera.x / map.tileSize);
-        var endCol = startCol + (camera.width / map.tileSize);
-        var startRow = Math.floor(camera.y / map.tileSize);
-        var endRow = startRow + (camera.height / map.tileSize);
-        var offsetX = -camera.x + startCol * map.tileSize;
-        var offsetY = -camera.y + startRow * map.tileSize;
-
-        for (var c = startCol; c <= endCol; c++) {
-            for (var r = startRow; r <= endRow; r++) {
-                var tile = map.getTile(layer, c, r);
-                var x = (c - startCol) * map.tileSize + offsetX;
-                var y = (r - startRow) * map.tileSize + offsetY;
-                // if (tile !== 0) { // 0 => empty tile
-                //     var fills = [
-                //         '#22ee99',
-                //         '#22aa55',
-                //         '#22ef89',
-                //     ];
-                //     ctx.rect(x,y,map.tileSize,map.tileSize);
-                //     ctx.fillStyle = fills[tile];
-                //     ctx.fill();
-                canvas.ctx.drawImage(
-                    this.images.tileAtlas, // image
-                    (tile - 1) * map.tileSize, // source x
-                    0, // source y
-                    map.tileSize, // source width
-                    map.tileSize, // source height
-                    Math.round(x),  // target x
-                    Math.round(y), // target y
-                    map.tileSize, // target width
-                    map.tileSize // target height
-                );
-                // }
-            }
-        }
-    }
 };
 
 Game.init();
