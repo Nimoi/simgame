@@ -11,8 +11,16 @@ class Unit extends Point {
         this.speed = 0.5;
         this.path = [{x: this.x, y: this.y}];
         this.map = props.map;
+        this.stats = {
+            hunger: 10,
+            maxHunger: 10,
+            thirst: 10,
+            maxThirst: 10,
+            energy: 10,
+            maxEnergy: 10
+        };
     }
-    update() {
+    update(delta) {
         this.drawPath();
         this.act();
         this.draw();

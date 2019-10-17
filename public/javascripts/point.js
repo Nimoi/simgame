@@ -14,8 +14,10 @@ class Point {
         this.height = this.size;
     }
     draw() {
-        let xOffset = this.x - this.camera.x,
-            yOffset = this.y - this.camera.y;
+        let originX = this.x - this.size / 2,
+            originY = this.y - this.size / 2,
+            xOffset = originX - this.camera.x,
+            yOffset = originY - this.camera.y;
         this.canvas.ctx.drawImage(this.sprite, xOffset, yOffset, this.size, this.size);
     }
     update() {

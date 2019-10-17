@@ -67,10 +67,10 @@ var Game = {
         this.map.update(camera);
         for (let i=0; i<this.resources.length; i++) {
             // let hitUnit = Calc.hitCheckRectangle(this.resources[i], this.units[0]);
-            this.resources[i].update();
+            this.resources[i].update(elapsed);
         }
         for (let i=0; i<this.units.length; i++) {
-            this.units[i].update();
+            this.units[i].update(elapsed);
         }
         // compute delta time in seconds -- also cap it
         this.delta = (elapsed - this.previousElapsed) / 1000.0;
