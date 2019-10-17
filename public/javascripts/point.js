@@ -10,6 +10,8 @@ class Point {
         // props.sprite ? moon
         this.sprite = moon;
         this.size = props.size;
+        this.width = this.size;
+        this.height = this.size;
     }
     draw() {
         let xOffset = this.x - this.camera.x,

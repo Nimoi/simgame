@@ -1,5 +1,5 @@
 import Calc from './calc.js';
-import Point from "./point.js";
+import Point from './point.js';
 
 var moon = new Image();
 moon.src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';

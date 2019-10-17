@@ -2,7 +2,8 @@ import Keyboard from './input.js';
 import Unit from './unit.js';
 import Map from './map.js';
 import Camera from './camera.js';
-import Resource from "./resource.js";
+import Resource from './resource.js';
+import Calc from './calc.js';
 
 var canvas = {
     width: 800,
@@ -13,7 +14,6 @@ var canvas = {
     }
 };
 
-// Grid tiles
 // Map scrolling / mouse corners
 // Units have needs - Hunger, Thirst, Tired
 // Units have skills - ???
@@ -57,28 +57,21 @@ var Game = {
     camera: camera,
     delta: 0,
     previousElapsed: 0,
-    images: {},
     init: function () {
-        this.images.sun = (new Image()).src = 'https://mdn.mozillademos.org/files/1456/Canvas_sun.png';
-        this.images.moon = (new Image()).src = 'https://mdn.mozillademos.org/files/1443/Canvas_moon.png';
-        this.images.earth = (new Image()).src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';
         Keyboard.listenForEvents([Keyboard.LEFT, Keyboard.RIGHT, Keyboard.UP, Keyboard.DOWN]);
         window.requestAnimationFrame((elapsed) => {this.draw(elapsed)});
     },
     draw: function (elapsed) {
-        canvas.ctx.globalCompositeOperation = 'destination-over';
         canvas.clearCanvas();
-        canvas.ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
         Keyboard.handleKeys(camera, this.delta);
-        for (let i=0; i<this.units.length; i++) {
-            this.units[i].update(this.resources);
-        }
+        this.map.update(camera);
         for (let i=0; i<this.resources.length; i++) {
+            // let hitUnit = Calc.hitCheckRectangle(this.resources[i], this.units[0]);
             this.resources[i].update();
         }
-        this.map.update(camera);
-        // var time = new Date();
-        // ctx.rotate(((2 * Math.PI) / 60) * time.getSeconds() + ((2 * Math.PI) / 60000) * time.getMilliseconds());
+        for (let i=0; i<this.units.length; i++) {
+            this.units[i].update();
+        }
         // compute delta time in seconds -- also cap it
         this.delta = (elapsed - this.previousElapsed) / 1000.0;
         this.delta = Math.min(this.delta, 0.25); // maximum delta of 250 ms
