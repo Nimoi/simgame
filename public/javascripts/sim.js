@@ -44,6 +44,7 @@ var nimoi = new Unit({
 var resource = new Resource({
     x: 100,
     y: 100,
+    size: 10,
     canvas: canvas,
     map: map,
     camera: camera,
@@ -69,14 +70,13 @@ var Game = {
         canvas.clearCanvas();
         canvas.ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
         Keyboard.handleKeys(camera, this.delta);
-
         for (let i=0; i<this.units.length; i++) {
             this.units[i].update(this.resources);
         }
         for (let i=0; i<this.resources.length; i++) {
             this.resources[i].update();
         }
-        this.map.drawLayer(0, camera);
+        this.map.update(camera);
         // var time = new Date();
         // ctx.rotate(((2 * Math.PI) / 60) * time.getSeconds() + ((2 * Math.PI) / 60000) * time.getMilliseconds());
         // compute delta time in seconds -- also cap it

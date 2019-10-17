@@ -9,46 +9,20 @@ class Map {
         this.tileSize = props.tileSize;
         this.tileAtlas = new Image();
         this.tileAtlas.src = '/images/tiles.png';
-        this.layers = [[
-            3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-            3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3,
-            3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3,
-            3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3,
-            3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3,
-            3, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 3,
-            3, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 3,
-            3, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 3,
-            3, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 3,
-            3, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 3,
-            3, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 3,
-            3, 3, 3, 1, 1, 2, 3, 3, 3, 3, 3, 3
-        ], [
-            4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4,
-            4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            4, 0, 0, 5, 0, 0, 0, 0, 0, 5, 0, 4,
-            4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-            4, 4, 4, 0, 5, 4, 4, 4, 4, 4, 4, 4,
-            4, 4, 4, 0, 0, 3, 3, 3, 3, 3, 3, 3
-        ]];
+        this.layers = [];
         this.generate();
     }
     generate() {
-        let layer = [];
-        for (let r = 0; r < this.rows; r++) {
-            let row = [];
-            for (let c = 0; c < this.rows; c++) {
-                row.push(Calc.getRandomArbitrary(0,2));
+        this.layers = [];
+        for (let lindex = 0; lindex < 2; lindex++) {
+            let layer = [];
+            for (let r = 0; r < this.rows; r++) {
+                for (let c = 0; c < this.rows; c++) {
+                    layer.push(Calc.getRandomArbitrary(0,5));
+                }
             }
-            layer.push(row);
+            this.layers.push(layer);
         }
-        console.log(layer);
-        // this.layers.push(layer);
     }
     getTile(layer, col, row) {
         return this.layers[layer][row * this.cols + col];
@@ -79,6 +53,10 @@ class Map {
                 );
             }
         }
+    }
+    update(camera) {
+        this.drawLayer(1, camera);
+        this.drawLayer(0, camera);
     }
 }
 
