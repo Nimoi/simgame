@@ -16,9 +16,17 @@ class Map {
         this.layers = [];
         for (let lindex = 0; lindex < 2; lindex++) {
             let layer = [];
-            for (let r = 0; r < this.rows; r++) {
-                for (let c = 0; c < this.rows; c++) {
-                    layer.push(Calc.getRandomArbitrary(0,5));
+            for (let r = 0; r < this.rows*2; r++) {
+                for (let c = 0; c < this.cols*2; c++) {
+                    if (lindex === 0) {
+                        layer.push(Calc.getRandomArbitrary(1,3));
+                    }
+                    if (lindex > 0) {
+                        let tile = Calc.getRandomArbitrary(0,9) > 8
+                            ? Calc.getRandomArbitrary(3,5)
+                            : 0;
+                        layer.push(tile);
+                    }
                 }
             }
             this.layers.push(layer);
@@ -55,8 +63,8 @@ class Map {
         }
     }
     update(camera) {
-        this.drawLayer(1, camera);
         this.drawLayer(0, camera);
+        this.drawLayer(1, camera);
     }
 }
 

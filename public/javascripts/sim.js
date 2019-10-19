@@ -3,7 +3,6 @@ import Unit from './unit.js';
 import Map from './map.js';
 import Camera from './camera.js';
 import Resource from './resource.js';
-import Calc from './calc.js';
 
 var canvas = {
     width: 800,
@@ -20,8 +19,8 @@ var canvas = {
 // Unit skills have levels / require experience
 
 var map = new Map({
-    cols: 12,
-    rows: 12,
+    cols: 16,
+    rows: 16,
     tileSize: 64,
     canvas: canvas,
 });
