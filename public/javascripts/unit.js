@@ -1,5 +1,6 @@
 import Calc from './calc.js';
 import Point from './point.js';
+import TimerManager from './timerManager.js';
 
 var moon = new Image();
 moon.src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';
@@ -19,8 +20,10 @@ class Unit extends Point {
             energy: 10,
             maxEnergy: 10
         };
+        this.timerManager = new TimerManager();
     }
     update(delta) {
+        this.timerManager.delta = delta;
         this.drawPath();
         this.act();
         this.draw();
@@ -31,19 +34,25 @@ class Unit extends Point {
         }
     }
     wander() {
-        if (!this.destination) {
+        if (! this.destination) {
             this.destination = this.getDestination();
         }
         this.distance = Calc.distanceBetween(this, this.destination);
         if (this.distance <= 5) {
-            // Reached destination; pause?
+            // Reached destination
             this.path.push(this.destination);
-            this.destination = this.getDestination();
+            this.timerManager.delay({
+                name: 'wander',
+                duration: 2000,
+                callback: () => {
+                    this.destination = this.getDestination();
+                    delete this.timerManager.timers.wander;
+                }
+            });
         }
         this.move();
     }
     getDestination() {
-        // TODO: Use camera offset
         return {
             x: Calc.getRandomArbitrary(0, this.camera.width),
             y: Calc.getRandomArbitrary(0, this.camera.height)
