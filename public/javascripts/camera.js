@@ -5,8 +5,8 @@ class Camera {
         this.width = props.width;
         this.height = props.height;
         this.map = props.map;
-        this.maxX = this.map.cols * this.map.tileSize - this.width/2;
-        this.maxY = this.map.rows * this.map.tileSize - this.height/2;
+        this.maxX = this.map.cols * this.map.tileSize - props.width;
+        this.maxY = this.map.rows * this.map.tileSize - props.height;
         this.speed = 256;
     }
     move(delta, dirx, diry) {

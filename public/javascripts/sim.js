@@ -26,8 +26,8 @@ var map = new Map({
 });
 
 var camera = new Camera({
-    width: canvas.width * 2,
-    height: canvas.height * 2,
+    width: canvas.width,
+    height: canvas.height,
     map: map
 });
 

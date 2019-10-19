@@ -9,7 +9,7 @@ class Unit extends Point {
     constructor(props) {
         super(props);
         this.impulse = 'wander';
-        this.speed = 0.5;
+        this.speed = 1;
         this.path = [{x: this.x, y: this.y}];
         this.map = props.map;
         this.stats = {
