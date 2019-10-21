@@ -1,3 +1,5 @@
+import Calc from './calc.js';
+
 var moon = new Image();
 moon.src = 'https://mdn.mozillademos.org/files/1443/Canvas_moon.png';
 
@@ -7,6 +9,7 @@ class Point {
         this.y = props.y;
         this.camera = props.camera;
         this.canvas = props.canvas;
+        this.map = props.map;
         // props.sprite ? moon
         this.sprite = moon;
         this.size = props.size;
@@ -18,10 +21,16 @@ class Point {
             originY = this.y - this.size / 2,
             xOffset = originX - this.camera.x,
             yOffset = originY - this.camera.y;
-        this.canvas.ctx.drawImage(this.sprite, xOffset, yOffset, this.size, this.size);
+        this.canvas.ctx.drawImage(this.sprite, xOffset, yOffset, this.width, this.height);
     }
     update() {
         this.draw();
+    }
+    getRandomPixel() {
+        return {
+            x: Calc.getRandomArbitrary(0, this.map.cols * this.map.tileSize),
+            y: Calc.getRandomArbitrary(0, this.map.rows * this.map.tileSize)
+        };
     }
 }
 

@@ -1,3 +1,4 @@
+// TODO: Map scrolling / mouse corners
 class Camera {
     constructor(props) {
         this.x = 0;

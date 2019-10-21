@@ -7,6 +7,18 @@ let Calc = {
         var toDestY = obj2.y - obj1.y;
         return Math.sqrt(toDestX * toDestX + toDestY * toDestY);
     },
+    arrayMin(array) {
+        return Math.min.apply( Math, array );
+    },
+    sortDistance(a,b) {
+        if (a.distance < b.distance) {
+            return -1;
+        }
+        if (a.distance > b.distance){
+            return 1;
+        }
+        return 0;
+    },
     hitCheckRectangle(r1, r2) {
         //Define the variables we'll need to calculate
         let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;

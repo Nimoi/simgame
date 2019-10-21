@@ -14,23 +14,13 @@ class Map {
     }
     generate() {
         this.layers = [];
-        for (let lindex = 0; lindex < 2; lindex++) {
-            let layer = [];
-            for (let r = 0; r < this.rows*2; r++) {
-                for (let c = 0; c < this.cols*2; c++) {
-                    if (lindex === 0) {
-                        layer.push(Calc.getRandomArbitrary(1,3));
-                    }
-                    if (lindex > 0) {
-                        let tile = Calc.getRandomArbitrary(0,9) > 8
-                            ? Calc.getRandomArbitrary(3,5)
-                            : 0;
-                        layer.push(tile);
-                    }
-                }
+        let layer = [];
+        for (let r = 0; r < this.rows*2; r++) {
+            for (let c = 0; c < this.cols*2; c++) {
+                layer.push(Calc.getRandomArbitrary(1,2));
             }
-            this.layers.push(layer);
         }
+        this.layers.push(layer);
     }
     getTile(layer, col, row) {
         return this.layers[layer][row * this.cols + col];
@@ -64,7 +54,6 @@ class Map {
     }
     update(camera) {
         this.drawLayer(0, camera);
-        this.drawLayer(1, camera);
     }
 }
 
