@@ -5,10 +5,12 @@ import Camera from './camera.js';
 import Tree from './tree.js';
 import Calc from "./calc.js";
 
-var canvas = {
+var canvasElement = document.getElementById("simulation"),
+    canvas = {
     width: 800,
     height: 600,
-    ctx: document.getElementById('simulation').getContext('2d'),
+    body: canvasElement,
+    ctx: canvasElement.getContext('2d'),
     clearCanvas: function () {
         this.ctx.clearRect(0, 0, this.width, this.height); // clear canvas
     }
@@ -103,3 +105,30 @@ var Game = {
 };
 
 Game.init();
+
+window.addEventListener('click', (e) => {
+    let rect = canvas.body.getBoundingClientRect();
+    let mousePos = getMousePosition(e, rect, camera);
+    let tileIndex = getTileFromPosition(mousePos, map);
+    console.log(mousePos);
+    console.log(tileIndex);
+    map.layers[0].splice(tileIndex, 1, 4);
+    console.log(map.layers);
+});
+
+function getMousePosition(e, container, camera) {
+    let xBase = e.clientX - container.left,
+        yBase = e.clientY - container.top,
+        xOffset = xBase + camera.x,
+        yOffset = yBase + camera.y;
+    return {
+        x: Math.round(xOffset),
+        y: Math.round(yOffset)
+    };
+}
+
+function getTileFromPosition(pos, map) {
+    let cols = Math.floor(pos.x / map.tileSize),
+        rows = Math.floor(pos.y / map.tileSize);
+    return map.getTileIndex(cols, rows);
+}
