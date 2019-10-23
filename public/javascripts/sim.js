@@ -1,4 +1,5 @@
-import Keyboard from './input.js';
+import Keyboard from './keyboard.js';
+import Mouse from './mouse.js';
 import Unit from './unit.js';
 import Map from './map.js';
 import Camera from './camera.js';
@@ -108,27 +109,8 @@ Game.init();
 
 window.addEventListener('click', (e) => {
     let rect = canvas.body.getBoundingClientRect();
-    let mousePos = getMousePosition(e, rect, camera);
-    let tileIndex = getTileFromPosition(mousePos, map);
-    console.log(mousePos);
-    console.log(tileIndex);
+    let mousePos = Mouse.getPosition(e, rect, camera);
+    let tileIndex = map.getTileFromPosition(mousePos);
     map.layers[0].splice(tileIndex, 1, 4);
-    console.log(map.layers);
 });
 
-function getMousePosition(e, container, camera) {
-    let xBase = e.clientX - container.left,
-        yBase = e.clientY - container.top,
-        xOffset = xBase + camera.x,
-        yOffset = yBase + camera.y;
-    return {
-        x: Math.round(xOffset),
-        y: Math.round(yOffset)
-    };
-}
-
-function getTileFromPosition(pos, map) {
-    let cols = Math.floor(pos.x / map.tileSize),
-        rows = Math.floor(pos.y / map.tileSize);
-    return map.getTileIndex(cols, rows);
-}

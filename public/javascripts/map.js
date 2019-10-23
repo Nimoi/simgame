@@ -28,6 +28,11 @@ class Map {
     getTileIndex(col, row) {
         return row * this.cols + col;
     }
+    getTileFromPosition(pos) {
+        let cols = Math.floor(pos.x / this.tileSize),
+            rows = Math.floor(pos.y / this.tileSize);
+        return this.getTileIndex(cols, rows);
+    }
     drawLayer(layer, camera) {
         let startCol = Math.floor(camera.x / this.tileSize),
             endCol = startCol + (camera.width / this.tileSize),
