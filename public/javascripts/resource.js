@@ -7,9 +7,7 @@ class Resource extends Point {
     constructor(props) {
         super(props);
     }
-    collect() {
-        delete this;
-    }
+    collect() { }
 }
 
 export default Resource;

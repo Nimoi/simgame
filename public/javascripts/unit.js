@@ -23,6 +23,14 @@ class Unit extends Point {
         this.timerManager = new TimerManager();
         this.inventory = {};
     }
+    draw() {
+        super.draw();
+        this.canvas.ctx.font = "12px Arial";
+        for (let item in this.inventory) {
+            let str = `${item}: ${this.inventory[item]}`;
+            this.canvas.ctx.fillText(str, this.xOffset, this.yOffset + 25);
+        }
+    }
     update(delta) {
         this.timerManager.delta = delta;
         this.act();
@@ -60,7 +68,13 @@ class Unit extends Point {
         }
     }
     collect(loot) {
-        //todo: Add to this.inventory
+        for (let item in loot) {
+            if (! (item in this.inventory)) {
+                this.inventory[item] = loot[item];
+                continue;
+            }
+            this.inventory[item] += loot[item];
+        }
     }
     move() {
         // Calculate direction towards dest

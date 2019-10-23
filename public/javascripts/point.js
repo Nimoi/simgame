@@ -18,10 +18,10 @@ class Point {
     }
     draw() {
         let originX = this.x - this.size / 2,
-            originY = this.y - this.size / 2,
-            xOffset = originX - this.camera.x,
-            yOffset = originY - this.camera.y;
-        this.canvas.ctx.drawImage(this.sprite, xOffset, yOffset, this.width, this.height);
+            originY = this.y - this.size / 2;
+        this.xOffset = originX - this.camera.x;
+        this.yOffset = originY - this.camera.y;
+        this.canvas.ctx.drawImage(this.sprite, this.xOffset, this.yOffset, this.width, this.height);
     }
     update() {
         this.draw();

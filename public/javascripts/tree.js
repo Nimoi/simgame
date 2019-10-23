@@ -13,7 +13,7 @@ class Tree extends Resource {
         this.y = loc.y;
     }
     collect() {
-        return [{wood:10}];
+        return {wood:10};
     }
 }
 

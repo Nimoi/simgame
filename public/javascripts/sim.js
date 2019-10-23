@@ -94,8 +94,9 @@ var Game = {
         unit.target(closest);
         let collide = Calc.hitCheckRectangle(closest, unit);
         if (collide) {
-            let loot = this.resources[closest.index].collect();
-            // delete this.resources[closest.index];
+            let hitResource = this.resources[closest.index],
+                loot = hitResource.collect();
+            this.resources.splice(closest.index, 1);
             unit.collect(loot);
             unit.target(distances.shift());
         }

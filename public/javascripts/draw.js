@@ -1,3 +1,4 @@
+
 Draw = {
     drawPath() {
         this.canvas.ctx.beginPath();
