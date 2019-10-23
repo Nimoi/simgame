@@ -76,6 +76,18 @@ class Unit extends Point {
             this.inventory[item] += loot[item];
         }
     }
+    harvest(resource, callback) {
+        let loot = resource.collect();
+        this.timerManager.delay({
+            name: 'harvest',
+            duration: 2000,
+            callback: () => {
+                this.collect(loot);
+                callback();
+                delete this.timerManager.timers.harvest;
+            }
+        });
+    }
     move() {
         // Calculate direction towards dest
         var toDestX = this.destination.x - this.x;
