@@ -10,6 +10,7 @@ class Map {
         this.tileAtlas = new Image();
         this.tileAtlas.src = '/images/tiles.png';
         this.layers = [];
+        this.tileData = {};
         this.generate();
     }
     generate() {
@@ -21,6 +22,12 @@ class Map {
             }
         }
         this.layers.push(layer);
+    }
+    select(tileIndex) {
+        if (! (tileIndex in this.tileData)) {
+            this.tileData[tileIndex] = {};
+        }
+        this.tileData[tileIndex].selected = true;
     }
     getTile(layer, col, row) {
         return this.layers[layer][row * this.cols + col];
@@ -57,6 +64,15 @@ class Map {
                     this.tileSize, // target width
                     this.tileSize // target height
                 );
+                let tileIndex = this.getTileIndex(c,r),
+                    tileData = this.tileData[tileIndex],
+                    newOffset = Math.round(y + 25);
+                if (tileData && tileData.selected) {
+                    this.canvas.ctx.font = "12px Arial";
+                    this.canvas.ctx.fillText(this.constructor.name, Math.round(x), newOffset);
+                    this.canvas.ctx.strokeStyle = '#0084ff';
+                    this.canvas.ctx.strokeRect(x-1, y-1, this.tileSize, this.tileSize);
+                }
             }
         }
     }

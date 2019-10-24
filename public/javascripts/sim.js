@@ -114,9 +114,6 @@ window.addEventListener('click', (e) => {
     deselectAll();
     let rect = canvas.body.getBoundingClientRect();
     let mousePos = Mouse.getPosition(e, rect, camera);
-    // let tileIndex = map.getTileFromPosition(mousePos);
-    // map.layers[0].splice(tileIndex, 1, 5);
-    // Select the first unit, then resource we collide with:
     let posWithSize = {
         x: mousePos.x,
         y: mousePos.y,
@@ -131,6 +128,9 @@ window.addEventListener('click', (e) => {
     if (resource) {
         return resource.selected = true;
     }
+    let tileIndex = map.getTileFromPosition(mousePos);
+    map.select(tileIndex);
+    // map.layers[0].splice(tileIndex, 1, 5);
 });
 
 function collidesWithAny(pos, array) {
@@ -151,5 +151,8 @@ function deselectAll() {
     for (let i = 0; i < Game.resources.length; i++) {
         let resource = Game.resources[i];
         resource.selected = false;
+    }
+    for (let tile in map.tileData) {
+        map.tileData[tile].selected = false;
     }
 }
