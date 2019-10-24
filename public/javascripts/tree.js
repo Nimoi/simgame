@@ -11,9 +11,12 @@ class Tree extends Resource {
         let loc = this.getRandomPixel();
         this.x = loc.x;
         this.y = loc.y;
+        this.loot = {
+            wood: 10
+        };
     }
     collect() {
-        return {wood:10};
+        return this.loot;
     }
 }
 

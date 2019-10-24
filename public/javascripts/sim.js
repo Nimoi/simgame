@@ -80,7 +80,7 @@ var Game = {
         this.previousElapsed = elapsed;
         window.requestAnimationFrame((elapsed) => {this.draw(elapsed)});
     },
-    collectResources: function (unit) {
+    getClosestResource: function (unit) {
         let distances = [];
         for (let i = 0; i < this.resources.length; i++) {
             let resource = this.resources[i];
@@ -93,7 +93,10 @@ var Game = {
                 index: i
             });
         }
-        let closest = distances.sort(Calc.sortDistance).shift();
+        return distances.sort(Calc.sortDistance).shift();
+    },
+    collectResources: function (unit) {
+        let closest = this.getClosestResource(unit);
         unit.target(closest);
         let collide = Calc.hitCheckRectangle(closest, unit);
         if (collide) {
@@ -108,9 +111,45 @@ var Game = {
 Game.init();
 
 window.addEventListener('click', (e) => {
+    deselectAll();
     let rect = canvas.body.getBoundingClientRect();
     let mousePos = Mouse.getPosition(e, rect, camera);
-    let tileIndex = map.getTileFromPosition(mousePos);
-    map.layers[0].splice(tileIndex, 1, 4);
+    // let tileIndex = map.getTileFromPosition(mousePos);
+    // map.layers[0].splice(tileIndex, 1, 5);
+    // Select the first unit, then resource we collide with:
+    let posWithSize = {
+        x: mousePos.x,
+        y: mousePos.y,
+        width: 1,
+        height: 1,
+    };
+    let unit = collidesWithAny(posWithSize, Game.units);
+    if (unit) {
+        return unit.selected = true;
+    }
+    let resource = collidesWithAny(posWithSize, Game.resources);
+    if (resource) {
+        return resource.selected = true;
+    }
 });
 
+function collidesWithAny(pos, array) {
+    for (let i = 0; i < array.length; i++) {
+        let item = array[i];
+        let collide = Calc.hitCheckRectangle(pos, item);
+        if (collide) {
+            return item;
+        }
+    }
+}
+
+function deselectAll() {
+    for (let i = 0; i < Game.units.length; i++) {
+        let unit = Game.units[i];
+        unit.selected = false;
+    }
+    for (let i = 0; i < Game.resources.length; i++) {
+        let resource = Game.resources[i];
+        resource.selected = false;
+    }
+}

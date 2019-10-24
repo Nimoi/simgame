@@ -22,13 +22,21 @@ class Unit extends Point {
         };
         this.timerManager = new TimerManager();
         this.inventory = {};
+        this.selected = false;
+        console.log();
     }
     draw() {
         super.draw();
-        this.canvas.ctx.font = "12px Arial";
-        for (let item in this.inventory) {
-            let str = `${item}: ${this.inventory[item]}`;
-            this.canvas.ctx.fillText(str, this.xOffset, this.yOffset + 25);
+        if (this.selected) {
+            this.canvas.ctx.font = "12px Arial";
+            let newOffset = this.yOffset + 25;
+            this.canvas.ctx.fillText(this.constructor.name, this.xOffset, newOffset);
+            newOffset += 10;
+            for (let item in this.inventory) {
+                let str = `${item}: ${this.inventory[item]}`;
+                this.canvas.ctx.fillText(str, this.xOffset, newOffset);
+                newOffset += 10;
+            }
         }
     }
     update(delta) {

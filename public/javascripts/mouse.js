@@ -6,8 +6,8 @@ Mouse.getPosition = function(e, container, camera) {
         xOffset = xBase + camera.x,
         yOffset = yBase + camera.y;
     return {
-        x: Math.round(xOffset),
-        y: Math.round(yOffset)
+        x: xOffset | 0,
+        y: yOffset | 0
     };
 };
 
