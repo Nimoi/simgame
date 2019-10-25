@@ -81,7 +81,6 @@ var Game = {
         window.requestAnimationFrame((elapsed) => {this.draw(elapsed)});
     },
     getClosestResource: function (unit) {
-        // TODO: target is based on anchor, but distance is based on x/y pos
         let distances = [];
         for (let i = 0; i < this.resources.length; i++) {
             let resource = this.resources[i];
