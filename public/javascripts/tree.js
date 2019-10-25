@@ -14,6 +14,10 @@ class Tree extends Resource {
         this.loot = {
             wood: 10
         };
+        this.anchor = {
+            x: this.x + this.width / 2,
+            y: this.y + this.height - 2
+        }
     }
     collect() {
         return this.loot;

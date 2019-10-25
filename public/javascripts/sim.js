@@ -81,6 +81,7 @@ var Game = {
         window.requestAnimationFrame((elapsed) => {this.draw(elapsed)});
     },
     getClosestResource: function (unit) {
+        // TODO: target is based on anchor, but distance is based on x/y pos
         let distances = [];
         for (let i = 0; i < this.resources.length; i++) {
             let resource = this.resources[i];
@@ -88,6 +89,7 @@ var Game = {
                 distance: Calc.distanceBetween(unit, resource),
                 width: resource.width,
                 height: resource.height,
+                anchor: resource.anchor,
                 x: resource.x,
                 y: resource.y,
                 index: i
@@ -107,6 +109,8 @@ var Game = {
         }
     }
 };
+
+// TODO: Need anchor points, so units harvest trees at the trunk
 
 Game.init();
 
@@ -156,3 +160,26 @@ function deselectAll() {
         map.tileData[tile].selected = false;
     }
 }
+
+function debug() {
+    (function() {
+        var script = document.createElement('script');
+        script.src='https://rawgit.com/paulirish/memory-stats.js/master/bookmarklet.js';
+        document.head.appendChild(script);
+    })();
+    (function() {
+        var script = document.createElement('script');
+        script.onload = function() {
+            var stats = new Stats();
+            document.body.appendChild(stats.dom);
+            requestAnimationFrame(function loop() {
+                stats.update();
+                requestAnimationFrame(loop)
+            });
+        };
+        script.src = '//mrdoob.github.io/stats.js/build/stats.min.js';
+        document.head.appendChild(script);
+    })();
+}
+
+debug();

@@ -23,7 +23,6 @@ class Unit extends Point {
         this.timerManager = new TimerManager();
         this.inventory = {};
         this.selected = false;
-        console.log();
     }
     draw() {
         super.draw();
@@ -71,8 +70,8 @@ class Unit extends Point {
     }
     target(target) {
         this.destination = {
-            x: target.x,
-            y: target.y
+            x: target.anchor.x,
+            y: target.anchor.y
         }
     }
     collect(loot) {
