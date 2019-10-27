@@ -6,6 +6,7 @@ import Camera from './camera.js';
 import Tree from './tree.js';
 import Calc from "./calc.js";
 import canvas from "./canvas.js";
+import Camp from './camp.js';
 
 var map = new Map({
     cols: 20,
@@ -31,8 +32,7 @@ var nimoi = new Unit({
 });
 
 var Game = {
-    units: [nimoi],
-    resources: [],
+    items: [nimoi],
     map: map,
     camera: camera,
     delta: 0,
@@ -41,6 +41,7 @@ var Game = {
         Keyboard.listenForEvents([Keyboard.LEFT, Keyboard.RIGHT, Keyboard.UP, Keyboard.DOWN]);
         window.requestAnimationFrame((elapsed) => {this.draw(elapsed)});
         this.addResources();
+        this.addBuildings();
     },
     addResources: function () {
         for (let i = 0; i < 999; i++) {
@@ -50,20 +51,28 @@ var Game = {
                 map: map,
                 camera: camera,
             });
-            this.resources.push(tree);
+            this.items.push(tree);
         }
+    },
+    addBuildings: function () {
+        let camp = new Camp({
+            canvas: canvas,
+            map: map,
+            camera: camera,
+        });
+        this.items.push(camp);
     },
     draw: function (elapsed) {
         canvas.clearCanvas();
+        this.sortY();
         Keyboard.handleKeys(camera, this.delta);
         this.map.update(camera);
-        for (let i=0; i<this.resources.length; i++) {
-            this.resources[i].update(elapsed);
-        }
-        for (let i=0; i<this.units.length; i++) {
-            let unit = this.units[i];
-            unit.update(elapsed);
-            this.collectResources(unit);
+        for (let i=0; i<this.items.length; i++) {
+            let item = this.items[i];
+            item.update(elapsed);
+            if (item.constructor.name === 'Unit') {
+                this.collectResources(item);
+            }
         }
         // compute delta time in seconds -- also cap it
         this.delta = (elapsed - this.previousElapsed) / 1000.0;
@@ -71,10 +80,21 @@ var Game = {
         this.previousElapsed = elapsed;
         window.requestAnimationFrame((elapsed) => {this.draw(elapsed)});
     },
-    getClosestResource: function (unit) {
+    sortY: function() {
+        this.items = this.items.sort(function(a, b) {
+            if (a.y < b.y) {
+                return -1;
+            }
+            if (a.y > b.y){
+                return 1;
+            }
+            return 0;
+        });
+    },
+    getClosestResource: function (unit, resources) {
         let distances = [];
-        for (let i = 0; i < this.resources.length; i++) {
-            let resource = this.resources[i];
+        for (let i = 0; i < resources.length; i++) {
+            let resource = resources[i];
             distances.push({
                 distance: Calc.distanceBetween(unit, resource),
                 width: resource.width,
@@ -88,15 +108,22 @@ var Game = {
         return distances.sort(Calc.sortDistance).shift();
     },
     collectResources: function (unit) {
-        let closest = this.getClosestResource(unit);
+        let resources = this.items.filter(function (item) {
+            return item.constructor.name === 'Tree';
+        });
+        let closest = this.getClosestResource(unit, resources);
         unit.target(closest);
         let collide = Calc.hitCheckRectangle(closest, unit);
         if (collide) {
-            let hitResource = this.resources[closest.index];
+            let hitResource = resources[closest.index];
             unit.harvest(hitResource, () => {
-                this.resources.splice(closest.index, 1);
+                this.deleteItem(hitResource);
             });
         }
+    },
+    deleteItem: function(item) {
+        let index = this.items.indexOf(item);
+        this.items.splice(index, 1);
     }
 };
 
