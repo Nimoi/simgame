@@ -1,13 +1,22 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; }
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 0;
+  margin: 0; }
 
 a {
   color: #00B7FF; }
 
-canvas#simulation {
-  border: 1px solid #0084ff;
-  width: 800px;
-  height: 600px; }
+.container {
+  display: flex;
+  justify-content: space-between; }
+
+#menu {
+  float: left; }
+
+.resources {
+  margin-bottom: 20px; }
+
+.units .unit {
+  margin-bottom: 20px; }
 
 /*# sourceMappingURL=style.css.map */

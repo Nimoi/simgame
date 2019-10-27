@@ -16,7 +16,7 @@ class Tree extends Resource {
         };
         this.anchor = {
             x: this.x + this.width / 2,
-            y: this.y + this.height - 2
+            y: this.y + this.height / 2
         }
     }
     collect() {

@@ -15,10 +15,6 @@ class Point {
         this.size = props.size;
         this.width = this.size;
         this.height = this.size;
-        this.anchor = {
-            x: this.x,
-            y: this.y
-        };
     }
     draw() {
         let originX = this.x - this.size / 2,

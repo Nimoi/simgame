@@ -5,21 +5,11 @@ import Map from './map.js';
 import Camera from './camera.js';
 import Tree from './tree.js';
 import Calc from "./calc.js";
-
-var canvasElement = document.getElementById("simulation"),
-    canvas = {
-    width: 800,
-    height: 600,
-    body: canvasElement,
-    ctx: canvasElement.getContext('2d'),
-    clearCanvas: function () {
-        this.ctx.clearRect(0, 0, this.width, this.height); // clear canvas
-    }
-};
+import canvas from "./canvas.js";
 
 var map = new Map({
-    cols: 16,
-    rows: 16,
+    cols: 20,
+    rows: 20,
     tileSize: 64,
     canvas: canvas,
 });
@@ -52,7 +42,7 @@ var Game = {
         this.addResources();
     },
     addResources: function () {
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 999; i++) {
             var tree = new Tree({
                 size: 10,
                 canvas: canvas,
