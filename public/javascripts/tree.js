@@ -1,10 +1,18 @@
 import Resource from "./resource.js";
+import Calc from "./calc.js";
 
 class Tree extends Resource {
     constructor(props) {
         super(props);
+        let sprites = [
+            '/images/tree.png',
+            '/images/tree2.png',
+            '/images/tree3.png',
+        ];
+        let randomSprite = Calc.getRandomArbitrary(0, sprites.length - 1);
+        let sprite = sprites[randomSprite];
         var treeSprite = new Image();
-        treeSprite.src = '/images/tree.png';
+        treeSprite.src = sprite;
         this.sprite = treeSprite;
         this.width = 16;
         this.height = 27;

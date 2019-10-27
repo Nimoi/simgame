@@ -10,15 +10,13 @@ class Point {
         this.camera = props.camera;
         this.canvas = props.canvas;
         this.map = props.map;
-        // props.sprite ? moon
         this.sprite = moon;
-        this.size = props.size;
-        this.width = this.size;
-        this.height = this.size;
+        this.width = props.width;
+        this.height = props.height;
     }
     draw() {
-        let originX = this.x - this.size / 2,
-            originY = this.y - this.size / 2;
+        let originX = this.x - this.width / 2,
+            originY = this.y - this.height / 2;
         this.xOffset = originX - this.camera.x;
         this.yOffset = originY - this.camera.y;
         this.canvas.ctx.drawImage(this.sprite, this.xOffset, this.yOffset, this.width, this.height);

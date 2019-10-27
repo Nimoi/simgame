@@ -2,9 +2,6 @@ import Calc from './calc.js';
 import Point from './point.js';
 import TimerManager from './timerManager.js';
 
-var moon = new Image();
-moon.src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';
-
 class Unit extends Point {
     constructor(props) {
         super(props);
@@ -23,6 +20,10 @@ class Unit extends Point {
         this.timerManager = new TimerManager();
         this.inventory = {};
         this.selected = false;
+
+        let sprite = new Image();
+        sprite.src = '/images/man.png';
+        this.sprite = sprite;
     }
     draw() {
         super.draw();

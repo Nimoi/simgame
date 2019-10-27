@@ -23,7 +23,8 @@ var camera = new Camera({
 var nimoi = new Unit({
     x: 100,
     y: 100,
-    size: 10,
+    width: 16,
+    height: 20,
     canvas: canvas,
     map: map,
     camera: camera
