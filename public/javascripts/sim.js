@@ -113,7 +113,7 @@ var Game = {
     },
     collectResources: function (unit) {
         let resources = this.items.filter(function (item) {
-            return item.constructor.name === 'Tree';
+            return item.constructor.name === 'Tree' && item.scale >= 1;
         });
         let closest = this.getClosestResource(unit, resources);
         unit.target(closest);
