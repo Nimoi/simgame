@@ -18,7 +18,7 @@ class Map {
         let layer = [];
         for (let r = 0; r < this.rows*2; r++) {
             for (let c = 0; c < this.cols*2; c++) {
-                layer.push(Calc.getRandomArbitrary(1,2));
+                layer.push(Calc.randomInt(1,2));
             }
         }
         this.layers.push(layer);

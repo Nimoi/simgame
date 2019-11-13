@@ -45,14 +45,18 @@ var Game = {
     },
     addResources: function () {
         for (let i = 0; i < 999; i++) {
-            var tree = new Tree({
-                size: 10,
-                canvas: canvas,
-                map: map,
-                camera: camera,
-            });
-            this.items.push(tree);
+            this.addTree();
         }
+    },
+    addTree: function(props = {}) {
+        let treeProps = Object.assign({
+            size: 10,
+            canvas: canvas,
+            map: map,
+            camera: camera,
+        }, props);
+        let tree = new Tree(treeProps);
+        this.items.push(tree);
     },
     addBuildings: function () {
         let camp = new Camp({
@@ -69,7 +73,7 @@ var Game = {
         this.map.update(camera);
         for (let i=0; i<this.items.length; i++) {
             let item = this.items[i];
-            item.update(elapsed);
+            item.update(elapsed, this);
             if (item.constructor.name === 'Unit') {
                 this.collectResources(item);
             }

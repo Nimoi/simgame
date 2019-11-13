@@ -13,21 +13,24 @@ class Point {
         this.sprite = moon;
         this.width = props.width;
         this.height = props.height;
+        this.scale = 'scale' in props ? props.scale : 1;
     }
     draw() {
-        let originX = this.x - this.width / 2,
-            originY = this.y - this.height / 2;
+        let scaledWidth = this.width * this.scale,
+            scaledHeight = this.height * this.scale,
+            originX = this.x - scaledWidth / 2,
+            originY = this.y - scaledHeight / 2;
         this.xOffset = originX - this.camera.x;
         this.yOffset = originY - this.camera.y;
-        this.canvas.ctx.drawImage(this.sprite, this.xOffset, this.yOffset, this.width, this.height);
+        this.canvas.ctx.drawImage(this.sprite, this.xOffset, this.yOffset, scaledWidth, scaledHeight);
     }
     update() {
         this.draw();
     }
     getRandomPixel() {
         return {
-            x: Calc.getRandomArbitrary(0, this.map.cols * this.map.tileSize),
-            y: Calc.getRandomArbitrary(0, this.map.rows * this.map.tileSize)
+            x: Calc.randomInt(0, this.map.cols * this.map.tileSize),
+            y: Calc.randomInt(0, this.map.rows * this.map.tileSize)
         };
     }
 }

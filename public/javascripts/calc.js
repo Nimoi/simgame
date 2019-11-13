@@ -1,5 +1,5 @@
 let Calc = {
-    getRandomArbitrary(min, max) {
+    randomInt(min, max) {
         return Math.round(Math.random() * (max - min) + min);
     },
     distanceBetween(obj1, obj2) {
