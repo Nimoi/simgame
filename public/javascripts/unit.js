@@ -45,29 +45,24 @@ class Unit extends Point {
         this.draw();
     }
     act() {
-        if (this.destination) {
-            this.move();
-        }
         if (! this.destination) {
             this.wander();
+            return;
+        }
+        this.distance = Calc.distanceBetween(this, this.destination);
+        if (this.distance >= 5) {
+            this.move();
         }
     }
     wander() {
-        if (! this.destination) {
-            this.destination = this.getRandomPixel();
-        }
-        this.distance = Calc.distanceBetween(this, this.destination);
-        if (this.distance <= 5) {
-            // Reached destination
-            this.timerManager.delay({
-                name: 'wander',
-                duration: 2000,
-                callback: () => {
-                    this.destination = this.getRandomPixel();
-                    delete this.timerManager.timers.wander;
-                }
-            });
-        }
+        this.timerManager.delay({
+            name: 'wander',
+            duration: 2000,
+            callback: () => {
+                this.destination = this.getRandomPixel();
+                delete this.timerManager.timers.wander;
+            }
+        });
     }
     target(target) {
         this.destination = {
@@ -92,6 +87,7 @@ class Unit extends Point {
             callback: () => {
                 this.collect(loot);
                 callback();
+                this.destination = null;
                 delete this.timerManager.timers.harvest;
             }
         });
