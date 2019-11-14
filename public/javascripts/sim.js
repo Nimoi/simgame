@@ -135,7 +135,7 @@ var Game = {
 
 Game.init();
 
-window.addEventListener('click', (e) => {
+window.addEventListener('mousemove', (e) => {
     deselectAll();
     let rect = canvas.body.getBoundingClientRect();
     let mousePos = Mouse.getPosition(e, rect, camera);
@@ -145,13 +145,9 @@ window.addEventListener('click', (e) => {
         width: 1,
         height: 1,
     };
-    let unit = collidesWithAny(posWithSize, Game.units);
-    if (unit) {
-        return unit.selected = true;
-    }
-    let resource = collidesWithAny(posWithSize, Game.resources);
-    if (resource) {
-        return resource.selected = true;
+    let item = collidesWithAny(posWithSize, Game.items);
+    if (item) {
+        return item.selected = true;
     }
     let tileIndex = map.getTileFromPosition(mousePos);
     map.select(tileIndex);
@@ -169,13 +165,9 @@ function collidesWithAny(pos, array) {
 }
 
 function deselectAll() {
-    for (let i = 0; i < Game.units.length; i++) {
-        let unit = Game.units[i];
-        unit.selected = false;
-    }
-    for (let i = 0; i < Game.resources.length; i++) {
-        let resource = Game.resources[i];
-        resource.selected = false;
+    for (let i = 0; i < Game.items.length; i++) {
+        let item = Game.items[i];
+        item.selected = false;
     }
     for (let tile in map.tileData) {
         map.tileData[tile].selected = false;

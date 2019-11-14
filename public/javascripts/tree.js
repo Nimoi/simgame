@@ -54,7 +54,7 @@ class Tree extends Resource {
         });
     }
     disperse(game) {
-        let delay = Calc.randomInt(5000, 60000);
+        let delay = Calc.randomInt(5000, 600000);
         this.timerManager.delay({
             name: 'dropSeed',
             duration: delay,
@@ -74,7 +74,7 @@ class Tree extends Resource {
         game.addTree({
             x: treeX,
             y: treeY,
-            scale: 0.01
+            scale: 0.25
         });
     }
 }

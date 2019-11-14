@@ -42,9 +42,9 @@ class Map {
     }
     drawLayer(layer, camera) {
         let startCol = Math.floor(camera.x / this.tileSize),
-            endCol = startCol + (camera.width / this.tileSize),
+            endCol = startCol + (camera.width / this.tileSize) + 1,
             startRow = Math.floor(camera.y / this.tileSize),
-            endRow = startRow + (camera.height / this.tileSize),
+            endRow = startRow + (camera.height / this.tileSize) + 1,
             offsetX = -camera.x + startCol * this.tileSize,
             offsetY = -camera.y + startRow * this.tileSize;
 
@@ -71,7 +71,7 @@ class Map {
                     this.canvas.ctx.font = "12px Arial";
                     this.canvas.ctx.fillText(this.constructor.name, Math.round(x), newOffset);
                     this.canvas.ctx.strokeStyle = '#0084ff';
-                    this.canvas.ctx.strokeRect(x-1, y-1, this.tileSize, this.tileSize);
+                    this.canvas.ctx.strokeRect(x+2, y+2, this.tileSize-4, this.tileSize-4);
                 }
             }
         }
